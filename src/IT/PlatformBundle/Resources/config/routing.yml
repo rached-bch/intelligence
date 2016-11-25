@@ -1,0 +1,30 @@
+it_platform_home:
+    path:      /
+    defaults:
+        _controller: ITPlatformBundle:Default:index
+    
+it_platform_view:
+    path:      /advert/{id}
+    defaults:
+        _controller: ITPlatformBundle:Advert:view
+    requirements:
+        id: \d+
+
+it_platform_add:
+    path:      /add
+    defaults:
+        _controller: ITPlatformBundle:Advert:add
+
+it_platform_edit:
+    path:      /edit/{id}
+    defaults:
+        _controller: ITPlatformBundle:Advert:edit
+    requirements:
+        id: \d+
+
+it_platform_delete:
+    path:      /delete/{id}
+    defaults:
+        _controller: ITPlatformBundle:Advert:delete
+    requirements:
+        id: \d+

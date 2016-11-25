@@ -1,0 +1,211 @@
+{% extends "ITPlatformBundle::layout.html.twig" %}
+
+{#{% block body %}
+{{ form(form) }}
+{% endblock %}#}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/prestashop_module_generator.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Prestashop module generator'|trans }}</h1>
+    {{ form_start(form) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.name, "Name", {'label_attr': {'class': 'control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.name) }}
+
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.tab, "Tab", {'label_attr': {'class': 'control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.tab) }}
+
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.tab, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.version, "Version", {'label_attr': {'class': 'control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.version) }}
+
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.version, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.author, "Author", {'label_attr': {'class': 'control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.author) }}
+
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.author, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+
+    <div class="form-group">
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.need_instance) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.need_instance, {'attr': {'class': 'form-check-input'}}) }}
+    </div>
+
+    <div class="form-group">
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.bootstrap) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.bootstrap, {'attr': {'class': 'form-check-input'}}) }}
+
+    </div>
+
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.display_name, "Display name", {'label_attr': {'class': 'control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.display_name) }}
+
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.display_name, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.description, "Description", {'label_attr': {'class': 'control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.description) }}
+
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.compatibility_min_ps_version, "Min Prestashop version", {'label_attr': {'class': 'control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.compatibility_min_ps_version) }}
+
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.compatibility_min_ps_version, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.compatibility_max_ps_version, "Max Prestashop version", {'label_attr': {'class': 'control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.compatibility_max_ps_version) }}
+
+        {# Génération de l'input. #}
+        {{ form_widget(form.compatibility_max_ps_version, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+
+    <div class="form-group">
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.override) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.override, {'attr': {'class': 'form-check-input'}}) }}
+
+    </div>
+
+    <div class="form-group">
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.config_enabled) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.config_enabled, {'attr': {'class': 'form-check-input'}}) }}
+
+    </div>
+
+    {{ form_errors(form.config_names) }}
+    {{ form_errors(form.config_types) }}
+
+    {{ form_widget(form.config_names) }}
+    
+    {{ form_widget(form.config_types) }}
+
+    <div id="list_config_rows"></div>
+    
+    <a href="#" id="add_configuration_row" class="btn btn-default" style="margin-bottom:15px;">{{ 'Add configuration'|trans }}</a>
+
+    <div class="form-group">
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.controller_enabled) }}
+        
+        {# Génération de l'input. #}
+        {{ form_widget(form.controller_enabled, {'attr': {'class': 'form-check-input'}}) }}
+
+    </div>
+    
+    {{ form_errors(form.controller_names) }}
+    {{ form_errors(form.controller_configs) }}
+
+    {{ form_widget(form.controller_names) }}
+    
+    {{ form_widget(form.controller_configs) }}
+
+    <div id="list_controller_rows"></div>
+    
+    <a href="#" id="add_controller_row" class="btn btn-default" style="margin-bottom:15px;">{{ 'Add one controller'|trans }}</a>
+
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.icon, "Icon", {'label_attr': {'class': 'control-label'}}) }}
+
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.icon) }}
+
+        {# Génération de l'input. #}
+        {{ form_widget(form.icon, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+
+    {# Génération automatique des champs pas encore écrits.
+        Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+        et tous les champs cachés (type « hidden »). #}
+    {{ form_rest(form) }}
+
+    {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+    {# Fermeture de la balise <form> du formulaire HTML #}
+    {{ form_end(form) }}
+{% endblock %}

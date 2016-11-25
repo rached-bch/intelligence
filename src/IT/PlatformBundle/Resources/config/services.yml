@@ -1,0 +1,25 @@
+services:
+#    it_platform.example:
+#        class: IT\PlatformBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+    it_platform.antispam:
+        class: IT\PlatformBundle\Antispam\ITAntispam
+        arguments:
+            - "@mailer"
+            - %locale%
+            - 50
+    it_platform.email.application_mailer:
+        class: IT\PlatformBundle\Email\ApplicationMailer
+        arguments:
+            - "@mailer"
+    it_platform.doctrine_listener.application_creation:
+        class: IT\PlatformBundle\DoctrineListener\ApplicationCreationListener
+        arguments:
+            - "@it_platform.email.application_mailer"
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+    it_platform.validator.antiflood:                              # Le nom du service
+        class: IT\PlatformBundle\Validator\AntifloodValidator     # La classe du service, ici notre validateur déjà créé
+        arguments: ["@request_stack", "@doctrine.orm.entity_manager"] # Les données qu'on injecte au service : la requête et l'EntityManager
+        tags:
+            - { name: validator.constraint_validator, alias: it_platform_antiflood }  # C'est avec l'alias qu'on retrouvera le service

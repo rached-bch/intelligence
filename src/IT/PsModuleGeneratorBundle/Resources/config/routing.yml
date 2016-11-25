@@ -1,0 +1,3 @@
+it_ps_module_generator_homepage:
+    path:     /module-generator
+    defaults: { _controller: ITPsModuleGeneratorBundle:Default:index }
