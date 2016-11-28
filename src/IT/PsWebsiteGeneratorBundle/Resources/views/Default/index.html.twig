@@ -1,0 +1,16 @@
+{% extends "ITPlatformBundle::layout.html.twig" %}
+
+{#{% block body %}
+{{ form(form) }}
+{% endblock %}#}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/prestashop_module_generator.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Prestashop website  generator'|trans }}</h1>
+    {{ include("ITPsWebsiteGeneratorBundle:Default:form.html.twig") }}
+{% endblock %}

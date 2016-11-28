@@ -1,0 +1,4 @@
+services:
+#    it_ps_website_generator.example:
+#        class: IT\PsWebsiteGeneratorBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

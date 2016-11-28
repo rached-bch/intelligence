@@ -1,7 +1,11 @@
+it_ps_website_generator:
+    resource: "@ITPsWebsiteGeneratorBundle/Resources/config/routing.yml"
+    prefix:   /prestashop
+
 it_ps_module_generator:
     resource: "@ITPsModuleGeneratorBundle/Resources/config/routing.yml"
     prefix:   /prestashop
-
+    
 it_platform:
     resource: "@ITPlatformBundle/Resources/config/routing.yml"
     prefix:   /

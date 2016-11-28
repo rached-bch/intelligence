@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new IT\UserBundle\ITUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new IT\PsModuleGeneratorBundle\ITPsModuleGeneratorBundle(),
+            new IT\PsWebsiteGeneratorBundle\ITPsWebsiteGeneratorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

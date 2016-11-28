@@ -1,0 +1,141 @@
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+{# Les erreurs générales du formulaire. #}
+{{ form_errors(form) }}
+
+{# Génération du label + error + widget pour un champ. #}
+{#{ form_row(form.date) }#}
+
+{# Génération manuelle et éclatée : #}
+<div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.domain, "Nom de domaine", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+    {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.domain) }}
+
+    <div class="col-sm-9">
+        {# Génération de l'input. #}
+        {{ form_widget(form.domain, {'attr': {'class': 'form-control', 'value': 'www.prestashop_vvv.local'}}) }}
+    </div>
+</div>
+
+
+{# Génération manuelle et éclatée : #}
+<div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.port, "Domaine port", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+    {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.port) }}
+
+    <div class="col-sm-9">
+        {# Génération de l'input. #}
+        {{ form_widget(form.port, {'attr': {'class': 'form-control', 'value': '80'}}) }}
+    </div>
+</div>
+
+
+{# Génération manuelle et éclatée : #}
+<div class="form-group">
+{# Génération du label. #}
+{{ form_label(form.prestashop_version, "Version de Prestashop", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+{# Affichage des erreurs pour ce champ précis. #}
+{{ form_errors(form.prestashop_version) }}
+
+<div class="col-sm-9">
+    {# Génération de l'input. #}
+    {{ form_widget(form.prestashop_version, {'attr': {'class': 'form-control'}}) }}
+</div>
+</div>
+
+
+{# Génération manuelle et éclatée : #}
+<div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.local_path_installation, "Path de l'installation", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+    {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.local_path_installation) }}
+
+    <div class="col-sm-9">
+        {# Génération de l'input. #}
+        {{ form_widget(form.local_path_installation, {'attr': {'class': 'form-control', 'value': 'E:\xampp4\htdocs\prestashop_'}}) }}
+    </div>
+</div>
+
+
+{# Génération manuelle et éclatée : #}
+<div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.local_path_repository_prestashop_versions, "Path local des versions Prestashop", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+    {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.local_path_repository_prestashop_versions) }}
+
+    <div class="col-sm-9">
+        {# Génération de l'input. #}
+        {{ form_widget(form.local_path_repository_prestashop_versions, {'attr': {'class': 'form-control', 'value': 'E:\xampp2\htdocs\PRESTASHOP_VERSIONS\\'}}) }}
+    </div>
+</div>
+
+{# Génération manuelle et éclatée : #}
+<div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.local_path_windows_host_file, "Path du fichier hosts de windows", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+    {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.local_path_windows_host_file) }}
+
+    <div class="col-sm-9">
+        {# Génération de l'input. #}
+        {{ form_widget(form.local_path_windows_host_file, {'attr': {'class': 'form-control', 'value': 'C:\Windows\System32\drivers\etc\hosts'}}) }}
+    </div>
+</div>
+
+{# Génération manuelle et éclatée : #}
+<div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.local_vhost_file, "Fichier local vhosts d'apache", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+    {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.local_vhost_file) }}
+
+    <div class="col-sm-9">
+        {# Génération de l'input. #}
+        {{ form_widget(form.local_vhost_file, {'attr': {'class': 'form-control', 'value': 'E:\xampp4\apache\conf\extra\httpd-vhosts.conf'}}) }}
+    </div>
+</div>
+
+
+{# Génération manuelle et éclatée : #}
+<div class="form-group">
+{# Génération du label. #}
+{{ form_label(form.database, "Base de données", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+{# Affichage des erreurs pour ce champ précis. #}
+{{ form_errors(form.database) }}
+
+<div class="col-sm-9">
+    {# Génération de l'input. #}
+    {{ form_widget(form.database, {'attr': {'class': 'form-control', 'value': 'prestashop_vvv_db'}}) }}
+</div>
+</div>
+
+<div class="form-group">
+
+    <div class="col-sm-3">&nbsp;</div>
+    <div class="col-sm-9">
+        {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+    </div>
+</div>
+
+{# Génération automatique des champs pas encore écrits.
+    Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+    et tous les champs cachés (type « hidden »). #}
+{{ form_rest(form) }}
+
+{# Fermeture de la balise <form> du formulaire HTML #}
+{{ form_end(form) }}

@@ -1,6 +1,6 @@
 <?php
 
-namespace IT\PsModuleGeneratorBundle\DependencyInjection;
+namespace IT\PsWebsiteGeneratorBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,15 +18,12 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('it_ps_module_generator');
+        $rootNode = $treeBuilder->root('it_ps_website_generator');
+
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
+
         return $treeBuilder;
-    }
-
-    public function test()
-    {
-
     }
 }
