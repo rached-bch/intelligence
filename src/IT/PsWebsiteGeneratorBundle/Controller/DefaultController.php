@@ -11,24 +11,19 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
+
 class DefaultController extends Controller
 {   
     public function indexAction(Request $request)
     {
-        //return $this->render('STPlatformBundle:Default:index.html.twig');
-        //$website = new stdClass();
-
-        // J'ai raccourci cette partie, car c'est plus rapide à écrire !
         $form = $this->get('form.factory')->createBuilder(FormType::class/*, $website*/)
-        /*->add('domain', TextType::class, array(
-            'constraints' => new Assert\Url(array('protocols' => array('http'))),
-        ))*/
         ->add('domain', TextType::class, array(
             'constraints' => new Assert\Regex(array( 'pattern' => '/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/' )),
         ))
@@ -57,7 +52,8 @@ class DefaultController extends Controller
             if ($form->isValid()) {
 
                 $data_domain = $form->getData();
-                
+                //printf('<hr><pre>%s</pre><hr>' , print_r($data_domain , true));//betadev
+
                 $result_create_domaine = $this->createNewLocalPrestashopDomain($data_domain) ;  
                 if(isset($result_create_domaine['result']) && $result_create_domaine['result'] === true) {
                     $request->getSession()->getFlashBag()->add('notice', sprintf('Le site web %s a bien été créé.', $result_create_domaine['domain']));            
@@ -86,16 +82,21 @@ class DefaultController extends Controller
         $errors = array();
         $res_configure_windows_domain = $this->configureLocalDomainWindowsHost($data_domain);
         if($res_configure_windows_domain === true) {
-            $res_configure_xampp_domain = $this->configureLocalDomainXampp($data_domain);
+            $res_configure_xampp_domain = $this->configureLocalDomain($data_domain);
             if($res_configure_xampp_domain === true) {
-                $res_download_prestashop = $this->downloadPrestashopForXampp($data_domain);
+                $res_download_prestashop = $this->downloadPrestashop($data_domain);
                 if($res_download_prestashop === true) {
-                    $result = true ;                    
+                    $res_configure_database = $this->configureLocalDatabase($data_domain);
+                    if($res_configure_database === true) {
+                        $result = true ;                    
+                    } else {
+                        $errors[] = "Erreur lors de la configurationd de la base de données" ;
+                    }            
                 } else {
-                    $errors[] = "Erreur lors du téléchargement de Prestashop pour xampp" ;
+                    $errors[] = "Erreur lors du téléchargement de Prestashop" ;
                 }                     
             } else {
-                $errors[] = "Erreur lors de la configuration du domaine en local pour xampp" ;
+                $errors[] = "Erreur lors de la configuration du domaine en local" ;
             } 
         } else {
             $errors[] = "Erreur lors de la configuration du domaine en local" ;
@@ -107,76 +108,86 @@ class DefaultController extends Controller
         $result = true ;
         $create = true ;
 
-        $path_host_file = 'C:\Windows\System32\drivers\etc\hosts' ;
-        $handle = fopen ($path_host_file, "ra");
-        if ($handle) {
-            $ip_founded = false ;
-            $domain_founded = false ;
-            while (!feof($handle)) {
-                $buffer = fgets($handl);
-                if($buffer !== false) {
-                    $tab_data = explode(" ", $buffer) ;
-                    foreach($tab_data as $one_string) {
-                         $one_string = trim($one_string) ;
-                         if($one_string == "127.0.0.1" || $one_string == "localhost") {
-                              $ip_founded = true ;
-                         } elseif($one_string == $data_domain['domain'] || $one_string == $data_domain['domain']) {
-                             $domain_founded = true ;
-                         }  
-                         if($ip_founded == true && $domain_founded == true) {
-                            $createddd = false ;
+        $path_host_file = $data_domain['local_path_windows_host_file'] ;
+        $fs = new Filesystem();
+        if($fs->exists($path_host_file)) {
+            $handle = fopen ($path_host_file, "ra");
+            if ($handle) {
+                $ip_founded = false ;
+                $domain_founded = false ;
+                while (!feof($handle)) {
+                    $buffer = fgets($handl);
+                    if($buffer !== false) {
+                        $tab_data = explode(" ", $buffer) ;
+                        foreach($tab_data as $one_string) {
+                            $one_string = trim($one_string) ;
+                            if($one_string == "127.0.0.1" || $one_string == "localhost") {
+                                $ip_founded = true ;
+                            } elseif($one_string == $data_domain['domain'] || $one_string == $data_domain['domain']) {
+                                $domain_founded = true ;
+                            }  
+                            if($ip_founded == true && $domain_founded == true) {
+                                $create = false ;
+                                break ;
+                            }    
+                        }
+                        if($ip_founded == true && $domain_founded == true) 
                             break ;
-                        }    
                     }
-                    if($ip_founded == true && $domain_founded == true) 
-                        break ;
                 }
-            }
 
-            if($create === true) {
-                $backup_file = $path_host_file.time().uniqid();
-                copy($path_host_file, $backup_file) ;
-                /*fwrite($handle , "\n\r");
-                if(fwrite($handle , "127.0.0.1       ".$data_domain['domain']) === false)
-                    $result = false ;
-                fwrite($handle , "\n\r");*/
+                if($create === true) {
+                    $backup_file = $path_host_file.time().uniqid();
+                    $fs->copy($path_host_file, $backup_file);
+                    /*fwrite($handle , "\n\r");
+                    if(fwrite($handle , "127.0.0.1       ".$data_domain['domain']) === false)
+                        $result = false ;
+                    fwrite($handle , "\n\r");*/
+                }
+                fclose($handle);
             }
-            fclose($handle);
+        } else {
+            $result = false ;
         }
         return $result ;
     } 
 
-    public function configureLocalDomainXampp($data_domain) {
+    public function configureLocalDomain($data_domain) {
         $result = true ;
 
-        $path_xampp_vhost_file = 'E:\xampp5\apache\conf\extra\httpd-vhosts.conf' ;
-        $handle = fopen ($path_xampp_vhost_file, "ra");
-        if ($handle) {
-           
-            $backup_file = $path_xampp_vhost_file.time().uniqid();
-            copy($path_xampp_vhost_file, $backup_file) ;
-            /*fwrite($handle , "\n\r");
-            $domain_config = '<VirtualHost *:'.$data_domain['port'].'81>
-                ServerAdmin adresse1@domainevirtuel.com
-                DocumentRoot "E:\xampp5\htdocs\sitti\prodhair-old-prod"
-                ServerName  '.$data_domain['domain'].'
-                ServerAlias  '.$data_domain['domain'].'
-            </VirtualHost>' ;
-            if(fwrite($handle , $domain_config) === false)
-                $result = false ;
-            fwrite($handle , "\n\r");*/
+        $path_vhost_file = $data_domain['local_vhost_file'] ;
+        $fs = new Filesystem();
+        if($fs->exists($path_vhost_file)) {
+            $handle = fopen ($path_vhost_file, "ra");
+            if ($handle) {
             
-            fclose($handle);
+                $backup_file = $path_vhost_file.time().uniqid();
+                $fs->copy($path_vhost_file, $backup_file);
+                /*fwrite($handle , "\n\r");
+                $domain_config = '<VirtualHost *:'.$data_domain['port'].'81>
+                    ServerAdmin adresse1@domainevirtuel.com
+                    DocumentRoot "E:\xampp5\htdocs\sitti\prodhair-old-prod"
+                    ServerName  '.$data_domain['domain'].'
+                    ServerAlias  '.$data_domain['domain'].'
+                </VirtualHost>' ;
+                if(fwrite($handle , $domain_config) === false)
+                    $result = false ;
+                fwrite($handle , "\n\r");*/
+                
+                fclose($handle);
 
-        }
+            }
+        } else {
+            $result = false ;
+        } 
         return $result ;
     } 
 
-    public function downloadPrestashopForXampp($data_domain) {
+    public function downloadPrestashop($data_domain) {
         $result = false ;
 
-        $path_local_check = 'E:/xampp2/htdocs/PRESTASHOP_VERSIONS/' ;
-        $path_local_install = 'E:/xampp5/htdocs/prestashop_'.$data_domain['prestashop_version'].'/' ;
+        $path_local_check = $data_domain['local_path_repository_prestashop_versions'] ;
+        $path_local_install = $data_domain['local_path_installation'] ;
         $path_external_check = 'https://download.prestashop.com/download/old/' ;
 
         $fs = new Filesystem();
@@ -185,7 +196,7 @@ class DefaultController extends Controller
             try {
                 $fs->mkdir($path_local_install);
                 $path_source_file =   $path_external_check."prestashop_".$data_domain['prestashop_version'].".zip" ;
-                if(file_exists($path_local_check."prestashop_".$data_domain['prestashop_version'].".zip"))
+                if($fs->exists($path_local_check."prestashop_".$data_domain['prestashop_version'].".zip"))
                     $path_source_file =   $path_local_check."prestashop_".$data_domain['prestashop_version'].".zip" ;
 
                 $path_local_install_file =  $path_local_install."prestashop_".$data_domain['prestashop_version'].".zip" ;
@@ -204,4 +215,14 @@ class DefaultController extends Controller
         return $result ;
     }
 
+    public function configureLocalDatabase($data_domain) {
+        $result = false ;
+
+
+         
+        
+
+        
+        return $result ;
+    }
 }

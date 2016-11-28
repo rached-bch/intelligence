@@ -67,6 +67,40 @@
                 </div>
                 <!-- content -->
                 <div class="col-md-10">
+                  {% block alerts %}
+                    {% if app.session is defined %}  
+                        {% if app.session.flashbag.has('info') %}
+                            <div class="alert alert-info">
+                                <ul>
+                                    {% for message in app.session.flashbag.get('info') %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}          
+                                </ul>  
+                            </div>          
+                        {% endif %}
+     
+                        {% if app.session.flashbag.has('error') %}
+                            <div class="alert alert-danger">
+                                <ul>
+                                    {% for message in app.session.flashbag.get('error') %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}   
+                                </ul>
+                            </div>            
+                        {% endif %}
+                        {% if app.session.flashbag.has('notice') %}
+                            <div class="alert alert-warning">
+                                <ul>
+                                    {% for message in app.session.flashbag.get('notice') %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}   
+                                </ul>
+                            </div>            
+                        {% endif %} 
+                         
+                    {% endif %}
+                  {% endblock %}	
+
                   {% block body %}
                   {% endblock %}		
                 </div>
