@@ -16,9 +16,14 @@ class DefaultController extends Controller
     return $this->render('ITPlatformBundle:Default:index.html.twig');
   }
 
-  public function menuAction()
+  public function menuAction(Request $request)
   {
+    $stack = $this->get('request_stack');
+    $masterRequest = $stack->getMasterRequest();
+    $current_route = $masterRequest->get('_route') ;
+    
     return $this->render('ITPlatformBundle:Default:menu.html.twig', array(
+      'current_route' => $current_route
     ));
   }
 }

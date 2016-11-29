@@ -1,11 +1,11 @@
 <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
-    <li class="active">
+    <li {% if current_route == "it_platform_home" %}  class="active"  {% endif %} >
         <a href="{{ path('it_platform_home') }}"><i class="glyphicon glyphicon-chevron-right"></i> {{ 'Tableau de bord'|trans }}</a>
     </li>
-    <li>
+    <li {% if current_route == "it_ps_module_generator_homepage" %}  class="active"  {% endif %} >
         <a href="{{ path('it_ps_module_generator_homepage') }}"><i class="glyphicon glyphicon-chevron-right"></i> {{ 'Générateur de modules Prestashop'|trans }}</a>
     </li>
-    <li>
+    <li {% if current_route == "it_ps_website_generator_homepage" %}  class="active"  {% endif %} >
         <a href="{{ path('it_ps_website_generator_homepage') }}"><i class="glyphicon glyphicon-chevron-right"></i> {{ 'Générateur de sites Prestashop'|trans }}</a>
     </li>
 </ul>
