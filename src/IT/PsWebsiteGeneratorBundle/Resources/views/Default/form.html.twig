@@ -3,125 +3,166 @@
 {# Les erreurs générales du formulaire. #}
 {{ form_errors(form) }}
 
-{# Génération du label + error + widget pour un champ. #}
-{#{ form_row(form.date) }#}
+<fieldset>
+    <legend>Paramètres du domaine</legend>
 
-{# Génération manuelle et éclatée : #}
-<div class="form-group">
-    {# Génération du label. #}
-    {{ form_label(form.domain, "Nom de domaine", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+    {# Génération manuelle et éclatée : #}
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.domain, "Nom de domaine", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
-    {# Affichage des erreurs pour ce champ précis. #}
-    {{ form_errors(form.domain) }}
-
-    <div class="col-sm-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.domain, {'attr': {'class': 'form-control', 'value': 'www.prestashop_vvv.local'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.domain, {'attr': {'class': 'form-control', 'value': 'www.prestashop_vvv.local'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+            {{ form_errors(form.domain) }}
+        </div>
     </div>
-</div>
 
 
-{# Génération manuelle et éclatée : #}
-<div class="form-group">
-    {# Génération du label. #}
-    {{ form_label(form.port, "Domaine port", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+    {# Génération manuelle et éclatée : #}
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.port, "Domaine port", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
-    {# Affichage des erreurs pour ce champ précis. #}
-    {{ form_errors(form.port) }}
+        
 
-    <div class="col-sm-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.port, {'attr': {'class': 'form-control', 'value': '80'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.port, {'attr': {'class': 'form-control', 'value': '81'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.port) }}
+        </div>
     </div>
-</div>
 
+    {# Génération manuelle et éclatée : #}
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.local_path_installation, "Path de l'installation", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
-{# Génération manuelle et éclatée : #}
-<div class="form-group">
-{# Génération du label. #}
-{{ form_label(form.prestashop_version, "Version de Prestashop", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        
 
-{# Affichage des erreurs pour ce champ précis. #}
-{{ form_errors(form.prestashop_version) }}
-
-<div class="col-sm-9">
-    {# Génération de l'input. #}
-    {{ form_widget(form.prestashop_version, {'attr': {'class': 'form-control'}}) }}
-</div>
-</div>
-
-
-{# Génération manuelle et éclatée : #}
-<div class="form-group">
-    {# Génération du label. #}
-    {{ form_label(form.local_path_installation, "Path de l'installation", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
-
-    {# Affichage des erreurs pour ce champ précis. #}
-    {{ form_errors(form.local_path_installation) }}
-
-    <div class="col-sm-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.local_path_installation, {'attr': {'class': 'form-control', 'value': 'E:\\xampp4\\htdocs\\prestashop_'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.local_path_installation, {'attr': {'class': 'form-control', 'value': 'E:\\xampp5\\htdocs\\prestashop_'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.local_path_installation) }}
+        </div>
     </div>
-</div>
 
+    {# Génération manuelle et éclatée : #}
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.local_vhost_file, "Fichier local vhosts d'apache", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
-{# Génération manuelle et éclatée : #}
-<div class="form-group">
-    {# Génération du label. #}
-    {{ form_label(form.local_path_repository_prestashop_versions, "Path local des versions Prestashop", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        
 
-    {# Affichage des erreurs pour ce champ précis. #}
-    {{ form_errors(form.local_path_repository_prestashop_versions) }}
-
-    <div class="col-sm-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.local_path_repository_prestashop_versions, {'attr': {'class': 'form-control', 'value': 'E:\\xampp2\\htdocs\\PRESTASHOP_VERSIONS\\'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.local_vhost_file, {'attr': {'class': 'form-control', 'value': 'E:\\xampp5\\apache\\conf\\extra\\httpd-vhosts.conf'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.local_vhost_file) }}
+        </div>
     </div>
-</div>
 
-{# Génération manuelle et éclatée : #}
-<div class="form-group">
-    {# Génération du label. #}
-    {{ form_label(form.local_path_windows_host_file, "Path du fichier hosts de windows", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+    {# Génération manuelle et éclatée : #}
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.local_path_windows_host_file, "Path du fichier hosts de windows", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
-    {# Affichage des erreurs pour ce champ précis. #}
-    {{ form_errors(form.local_path_windows_host_file) }}
+        
 
-    <div class="col-sm-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.local_path_windows_host_file, {'attr': {'class': 'form-control', 'value': 'C:\\Windows\\System32\\drivers\\etc\\hosts'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.local_path_windows_host_file, {'attr': {'class': 'form-control', 'value': 'C:\\Windows\\System32\\drivers\\etc\\hosts'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.local_path_windows_host_file) }}
+        </div>
     </div>
-</div>
+</fieldset>
+<br>
+<fieldset>
+    <legend>Paramètres de Prestashop</legend>
+    {# Génération manuelle et éclatée : #}
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.prestashop_version, "Version de Prestashop", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
-{# Génération manuelle et éclatée : #}
-<div class="form-group">
-    {# Génération du label. #}
-    {{ form_label(form.local_vhost_file, "Fichier local vhosts d'apache", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
-
-    {# Affichage des erreurs pour ce champ précis. #}
-    {{ form_errors(form.local_vhost_file) }}
-
-    <div class="col-sm-9">
-        {# Génération de l'input. #}
-        {{ form_widget(form.local_vhost_file, {'attr': {'class': 'form-control', 'value': 'E:\\xampp4\\apache\\conf\\extra\\httpd-vhosts.conf'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.prestashop_version, {'attr': {'class': 'form-control'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.prestashop_version) }}
+        </div>
     </div>
-</div>
+
+    {# Génération manuelle et éclatée : #}
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.local_path_repository_prestashop_versions, "Path local des versions Prestashop", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
 
-{# Génération manuelle et éclatée : #}
-<div class="form-group">
-{# Génération du label. #}
-{{ form_label(form.database, "Base de données", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.local_path_repository_prestashop_versions, {'attr': {'class': 'form-control', 'value': 'E:\\xampp2\\htdocs\\PRESTASHOP_VERSIONS\\'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.local_path_repository_prestashop_versions) }}
+        </div>
+    </div>
+</fieldset>
+<br>
+<fieldset>
+    <legend>Base de données</legend>
+    <div class="form-group">
+        {{ form_label(form.database, "Nom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.database, {'attr': {'class': 'form-control', 'value': 'prestashop_vvv_db'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.database) }}
+        </div>
+    </div>
 
-{# Affichage des erreurs pour ce champ précis. #}
-{{ form_errors(form.database) }}
+    <div class="form-group">
+        {{ form_label(form.database_user, "Utilisateur", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.database_user, {'attr': {'class': 'form-control', 'value': 'root'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.database_user) }}
+        </div>
+    </div>
 
-<div class="col-sm-9">
-    {# Génération de l'input. #}
-    {{ form_widget(form.database, {'attr': {'class': 'form-control', 'value': 'prestashop_vvv_db'}}) }}
-</div>
-</div>
+    <div class="form-group">
+        {{ form_label(form.database_password, "Mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.database_password, {'attr': {'class': 'form-control', 'value': ''}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.database_password) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.database_host, "Hôte", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.database_host, {'attr': {'class': 'form-control', 'value': 'localhost'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.database_host) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.database_port, "Port", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        <div class="col-sm-9">
+            {# Génération de l'input. #}
+            {{ form_widget(form.database_port, {'attr': {'class': 'form-control', 'value': '3307'}}) }}
+            {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.database_port) }}
+        </div>
+    </div>
+</fieldset>
 
 <div class="form-group">
 

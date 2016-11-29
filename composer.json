@@ -24,7 +24,8 @@
         "incenteev/composer-parameter-handler": "^2.0", 
 		"doctrine/doctrine-fixtures-bundle": "~2.3", 
         "stof/doctrine-extensions-bundle": "^1.2.2", 
-        "friendsofsymfony/user-bundle": "dev-master"
+        "friendsofsymfony/user-bundle": "dev-master",
+        "pclzip/pclzip": "2.8.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

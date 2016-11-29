@@ -69,6 +69,16 @@
                 <div class="col-md-10">
                   {% block alerts %}
                     {% if app.session is defined %}  
+                        {% if app.session.flashbag.has('success') %}
+                            <div class="alert alert-success">
+                                <ul>
+                                    {% for message in app.session.flashbag.get('success') %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}   
+                                </ul>
+                            </div>            
+                        {% endif %}
+
                         {% if app.session.flashbag.has('info') %}
                             <div class="alert alert-info">
                                 <ul>
