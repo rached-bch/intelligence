@@ -26,10 +26,12 @@ class DefaultController extends Controller
         ->add('name',     TextType::class, array(
             'label'    => $this->get('translator')->trans('Name'),
             'required' => true,
+            'constraints' => new Regex(array( 'pattern' => '/^[_.a-z0-9]+$/i' )),
         ))
         ->add('tab',     TextType::class, array(
             'label'    => $this->get('translator')->trans('Name'),
             'required' => true,
+            'constraints' => new Regex(array( 'pattern' => '/^[_.a-z0-9]+$/i' )),
         ))
         ->add('version',     TextType::class, array(
             'label'    => $this->get('translator')->trans('Version'),
@@ -103,7 +105,8 @@ class DefaultController extends Controller
             'entry_type'   => TextType::class,
             'allow_add'    => true,
             'allow_delete' => true, 
-            'required' => false
+            'required' => false, 
+            'constraints' => new ContainsAlphanumeric(),
         ))
         ->add('controller_configs', CollectionType::class, array(
             'entry_type'   => TextType::class,
