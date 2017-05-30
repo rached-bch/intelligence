@@ -11,10 +11,31 @@ function ConfigurationManager() {
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
             return false;
         });
-
-        self.addConfigRow($container_config_name, $container_config_type);
+		
+		var index = $('div#form_config_names').find('.form-group').length ;
+		if(index == 0) {
+			self.addConfigRow($container_config_name, $container_config_type, "", "");
+		} else {
+			var name_values = [] ;
+			var type_values = [] ;
+			var temp = "" ;
+			for(var i = 0 ; i < index ; i++) {
+				temp = $('div#form_config_names').find('.form-group').eq(i).find('input').eq(0).val() ;
+				name_values.push(temp) ;
+				
+				temp = $('div#form_config_types').find('.form-group').eq(i).find('select').eq(0).val() ;
+				type_values.push(temp) ;	
+			}
+			
+			$('div#form_config_names').html("");
+        	$('div#form_config_types').html("");
+			
+			for(var i = 0 ; i < name_values.length ; i++) {
+				self.addConfigRow($container_config_name, $container_config_type, name_values[i], type_values[i]);	
+			}
+		}
     }, 
-    this.addConfigRow = function ($container_config_name, $container_config_type) {
+    this.addConfigRow = function ($container_config_name, $container_config_type, $config_name_value, $config_type_value) {
         var index = $('div#list_config_rows').find('.form-group').length / 2;
 
         var template = $container_config_name.attr('data-prototype')
@@ -22,6 +43,8 @@ function ConfigurationManager() {
         .replace(/__name__/g,        index) ;
 
         var $prototype_1 = $(template);
+		
+		$prototype_1.find('input').eq(0).val($config_name_value) ;
 
         $('#list_config_rows').append($prototype_1);
 
@@ -31,6 +54,8 @@ function ConfigurationManager() {
         .replace(/__name__/g,        index)  ;
 
         var $prototype_2 = $(template);
+		
+		$prototype_2.find('select').eq(0).val($config_type_value) ;
 
         $('#list_config_rows').append($prototype_2);    
 
@@ -65,9 +90,31 @@ function ControllerManager() {
             return false;
         });
 
-        self.addControllerRow($container_controller_name, $container_controller_config);
+        //self.addControllerRow($container_controller_name, $container_controller_config);
+		var index = $('div#form_controller_names').find('.form-group').length ;
+		if(index == 0) {
+			self.addControllerRow($container_controller_name, $container_controller_config, "", "");
+		} else {
+			var name_values = [] ;
+			var config_values = [] ;
+			var temp = "" ;
+			for(var i = 0 ; i < index ; i++) {
+				temp = $('div#form_controller_names').find('.form-group').eq(i).find('input').eq(0).val() ;
+				name_values.push(temp) ;
+				
+				temp = $('div#form_controller_configs').find('.form-group').eq(i).find('select').eq(0).val() ;
+				config_values.push(temp) ;	
+			}
+			
+			$('div#form_controller_names').html("");
+        	$('div#form_controller_configs').html("");
+			
+			for(var i = 0 ; i < name_values.length ; i++) {
+				self.addControllerRow($container_controller_name, $container_controller_config, name_values[i], config_values[i]);	
+			}
+		}
     }, 
-    this.addControllerRow = function ($container_controller_name, $container_controller_config) {
+    this.addControllerRow = function ($container_controller_name, $container_controller_config, $controller_name_value, $controller_config_value) {
         var index = $('div#list_controller_rows').find('.form-group').length / 2;
 
         var template = $container_controller_name.attr('data-prototype')
@@ -75,6 +122,8 @@ function ControllerManager() {
         .replace(/__name__/g,        index) ;
 
         var $prototype_1 = $(template);
+		
+		$prototype_1.find('input').eq(0).val($controller_name_value) ;
 
         $('#list_controller_rows').append($prototype_1);
         //###########################################
@@ -83,6 +132,8 @@ function ControllerManager() {
         .replace(/__name__/g,        index)  ;
 
         var $prototype_2 = $(template);
+		
+		$prototype_2.find('select').eq(0).val($controller_config_value) ;
 
         $('#list_controller_rows').append($prototype_2);    
 
